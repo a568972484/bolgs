@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="YangWenyi"><meta name="renderer" content="webkit"><meta name="copyright" content="YangWenyi"><meta name="keywords" content="Hexo"><meta name="description" content="null"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>django-分页 · Mr.Yang's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/blogs/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/blogs/img/assets/dog.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">YangWenyi</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Yang's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">django-分页</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-08-16</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="django"> django</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="08-16自我总结"><a href="#08-16自我总结" class="headerlink" title="08.16自我总结"></a>08.16自我总结</h1><h1 id="django-分页"><a href="#django-分页" class="headerlink" title="django-分页"></a>django-分页</h1><h2 id="一-django自带的分页"><a href="#一-django自带的分页" class="headerlink" title="一.django自带的分页"></a>一.django自带的分页</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">### 1.导入模块</span><br><span class="line">```from django.core.paginator import Paginator</span><br></pre></td></tr></table></figure>
+<h3 id="2-读取信息"><a href="#2-读取信息" class="headerlink" title="2.读取信息"></a>2.读取信息</h3><p>​ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">### 3.生成painantor对象</span><br><span class="line">#### 生成painantor对象</span><br><span class="line">```python</span><br><span class="line"> paginator = Paginator(userlist, 10) #对象,每页多少条数据</span><br></pre></td></tr></table></figure></p>
+<h4 id="painantor的属性与方法"><a href="#painantor的属性与方法" class="headerlink" title="painantor的属性与方法"></a>painantor的属性与方法</h4><p><ul></ul></p>
+<p><li>属性</li></p>
+<p><ul></ul></p>
+<p><li>object_list：返回所有页对象的的列表</li></p>
+<p><li>per_page: 每页显示条目数量</li></p>
+<p><li>count:数据总个数</li></p>
+<p><li>num_pages:总页数</li></p>
+<p><li>page_range:总页数的索引范围，如: (1,10),(1,200)</li><br>&lt;/ul&gt;&lt;/li&gt;</p>
+<p><li>方法</li></p>
+<p><ul></ul></p>
+<p><li>page(第几页):page对象</li><br>&lt;/ul&gt;&lt;/li&gt;<br>&lt;/ul&gt;</p>
+<h3 id="4-生成page对象"><a href="#4-生成page对象" class="headerlink" title="4.生成page对象"></a>4.生成page对象</h3><h4 id="生成page对象"><a href="#生成page对象" class="headerlink" title="生成page对象"></a>生成page对象</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">page_1 = paginator.page(<span class="number">1</span>)  <span class="comment">#第一页的信息</span></span><br></pre></td></tr></table></figure>
+<h4 id="page的属性和方法"><a href="#page的属性和方法" class="headerlink" title="page的属性和方法"></a>page的属性和方法</h4><p><ul></ul></p>
+<p><li>属性</li></p>
+<p><ul></ul></p>
+<p><li>object_list：返回当前页对象的的列表</li></p>
+<p><li>number：返回当前页是第几页，从1开始</li></p>
+<p><li>paginator：当前页对应的paginator对象</li><br>&lt;/ul&gt;&lt;/li&gt;</p>
+<p><li>方法</li></p>
+<p><ul></ul></p>
+<p><li>has_next(): 是否有下一页,有就返回Ture</li></p>
+<p><li>next_page_numbe()r:返回值下一页页码</li></p>
+<p><li>has_previous():是否有上一页,有就返回Ture</li></p>
+<p><li>previous_page_number():返回值上一页页码</li><br>&lt;/ul&gt;&lt;/li&gt;<br>&lt;/ul&gt;</p>
+<h2 id="二-自定义分页"><a href="#二-自定义分页" class="headerlink" title="二.自定义分页"></a>二.自定义分页</h2><p><code>原理</code>:我们用orm获得表里面信息的时候,他是个列表,我们可以用列表的切片来进行内容选取而达到分页的效果</p>
+</article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://pythonywy.gitee.io">YangWenyi</a></p><p> <span>Link:  </span><a href="http://pythonywy.gitee.io/2019/08/16/django-分页/">http://pythonywy.gitee.io/2019/08/16/django-分页/</a></p><p> <span>Copyright:  </span><span>YangWenyi</span></p></div><div class="post-paginator"><a class="nextSlogan" href="/blogs/2019/08/13/django中CBV/" title="django中CBV"><span>NextPost ></span><br><span class="nextTitle">django中CBV</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?" + 'true';
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#08-16自我总结"><span class="toc-number">1.</span> <span class="toc-text">08.16自我总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#django-分页"><span class="toc-number">2.</span> <span class="toc-text">django-分页</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一-django自带的分页"><span class="toc-number">2.1.</span> <span class="toc-text">一.django自带的分页</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-读取信息"><span class="toc-number">2.1.1.</span> <span class="toc-text">2.读取信息</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#painantor的属性与方法"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">painantor的属性与方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-生成page对象"><span class="toc-number">2.1.2.</span> <span class="toc-text">4.生成page对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#生成page对象"><span class="toc-number">2.1.2.1.</span> <span class="toc-text">生成page对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#page的属性和方法"><span class="toc-number">2.1.2.2.</span> <span class="toc-text">page的属性和方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-自定义分页"><span class="toc-number">2.2.</span> <span class="toc-text">二.自定义分页</span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

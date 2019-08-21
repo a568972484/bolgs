@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="YangWenyi"><meta name="renderer" content="webkit"><meta name="copyright" content="YangWenyi"><meta name="keywords" content="Hexo"><meta name="description" content="null"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Event事件 · Mr.Yang's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/blogs/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/blogs/img/assets/dog.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">YangWenyi</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Yang's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1 class="post-title">Event事件</h1><div class="post-intros"><div class="post-intro-meta"><span class="post-intro-time"><i class="post-intro-calendar fa fa-calendar"></i><span>2019-07-07</span></span><span class="post-intro-tags"><a class="intro-tag fa fa-tag" href="javascript:void(0)" date-tags="python"> python</a></span></div></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><article class="article-entry" id="post"><h1 id="07-07自我总结"><a href="#07-07自我总结" class="headerlink" title="07.07自我总结"></a>07.07自我总结</h1><h1 id="Event事件"><a href="#Event事件" class="headerlink" title="Event事件"></a>Event事件</h1><h2 id="一-导入模块"><a href="#一-导入模块" class="headerlink" title="一.导入模块"></a>一.导入模块</h2><figure class="highlight plain"><figcaption><span>threading import Event```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">## 二.概念</span><br><span class="line">线程间状态同步:即将一个任务丢到子进程中,这个任务将异步执行,如何获取到这个任务的**执行状态**</span><br><span class="line">**注意:**执行状态和执行结果不是同一个概念,异步回调拿到的是任务的执行结果</span><br><span class="line">假设</span><br><span class="line">一个线程 负责启动服务器 启动服务器需要花一定的时间</span><br><span class="line">另一个线程作为客户端 要连接服务器 必须保证服务器已经启动</span><br><span class="line">要获取状态可以采永轮询(循环轮训)的方法 但是浪费了CPU资源 而且可能会造成延迟 不能立即获取状态</span><br><span class="line">就可以使用事件来完成状态同步</span><br><span class="line">**事件本质就是 一个标志 可以是False 或是True **</span><br><span class="line">**特殊之处在于 其包含一个wait函数 可以阻塞当前线程 直到状态从False变为True**</span><br><span class="line">## 三.Event对象的方法</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">&lt;li&gt;event.isSet()：返回event的状态值&lt;/li&gt;</span><br><span class="line">&lt;li&gt;event.wait()：将阻塞线程；知道event的状态为True,会执行下去&lt;/li&gt;</span><br><span class="line">&lt;li&gt;event.set()： 设置event的状态值为True，所有阻塞池的线程激活进入就绪状态， 等待操作系统调度&lt;/li&gt;</span><br><span class="line">&lt;li&gt;event.clear()：恢复event的状态值为False。&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">## 四.简单应用</span><br><span class="line">```python</span><br><span class="line">from threading import Thread,Event</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">e = Event() #默认值为false</span><br><span class="line"></span><br><span class="line">#启动服务器任务</span><br><span class="line">def start_server():</span><br><span class="line"></span><br><span class="line">    print(&apos;starting server....&apos;)</span><br><span class="line">    #模拟启动服务器的延迟</span><br><span class="line">    time.sleep(3)</span><br><span class="line"></span><br><span class="line">    print(&apos;server started....&apos;)</span><br><span class="line">    </span><br><span class="line">    #将event事件的初始状态由false转为true</span><br><span class="line">    e.set()</span><br><span class="line"></span><br><span class="line">#连接服务器任务</span><br><span class="line">def connect_server():</span><br><span class="line">    e.wait()    #等待start事件的任务状态从false变为true</span><br><span class="line"></span><br><span class="line">    if e.is_set():</span><br><span class="line">        print(&apos;服务器连接成功&apos;)</span><br><span class="line"></span><br><span class="line">#创建线程对象</span><br><span class="line">t1 = Thread(target=start_server)</span><br><span class="line">t2 = Thread(target=connect_server)</span><br><span class="line"></span><br><span class="line">#启动线程</span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br></pre></td></tr></table></figure>
+<h2 id><a href="#" class="headerlink" title=" "></a> </h2></article><!-- lincense--><div class="license-wrapper"><p> <span>Author:  </span><a href="http://pythonywy.gitee.io">YangWenyi</a></p><p> <span>Link:  </span><a href="http://pythonywy.gitee.io/2019/07/07/Event事件/">http://pythonywy.gitee.io/2019/07/07/Event事件/</a></p><p> <span>Copyright:  </span><span>YangWenyi</span></p></div><div class="post-paginator"><a class="prevSlogan" href="/blogs/2019/07/13/数据库的基础概念/" title="数据库的基础概念"><span>< PreviousPost</span><br><span class="prevTitle">数据库的基础概念</span></a><a class="nextSlogan" href="/blogs/2019/06/19/类与对象,类的继承,类的派生,类的组合,多态/" title="类与对象,类的继承,类的派生,类的组合,多态"><span>NextPost ></span><br><span class="nextTitle">类与对象,类的继承,类的派生,类的组合,多态</span></a><div class="clear"></div></div><div id="comment"></div></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?" + 'true';
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script></div></footer><!-- catelog--><div class="toc-wrapper" style="top: 70vh;"><div class="toc-catalog"><i class="fa fa-list"> </i><span>CATALOG</span></div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#07-07自我总结"><span class="toc-number">1.</span> <span class="toc-text">07.07自我总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Event事件"><span class="toc-number">2.</span> <span class="toc-text">Event事件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一-导入模块"><span class="toc-number">2.1.</span> <span class="toc-text">一.导入模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#null"><span class="toc-number">2.2.</span> <span class="toc-text"> </span></a></li></ol></li></ol></div><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>

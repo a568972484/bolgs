@@ -1,0 +1,145 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><meta name="author" content="YangWenyi"><meta name="renderer" content="webkit"><meta name="copyright" content="YangWenyi"><meta name="keywords" content="Hexo"><meta name="description" content="null"><meta name="Cache-Control" content="no-cache"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Mr.Yang's Blog</title><link rel="stylesheet" href="/css/style.css?v=2018.7.9"><link rel="stylesheet" href="/css/animation.css?v=2018.7.9"><link rel="icon" href="/blogs/img/assets/favicon.ico"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css?version=1.5.6"><!-- scripts--><script>(function( w ){
+  "use strict";
+  // rel=preload support test
+  if( !w.loadCSS ){
+    w.loadCSS = function(){};
+  }
+  // define on the loadCSS obj
+  var rp = loadCSS.relpreload = {};
+  // rel=preload feature support test
+  // runs once and returns a function for compat purposes
+  rp.support = (function(){
+    var ret;
+    try {
+      ret = w.document.createElement( "link" ).relList.supports( "preload" );
+    } catch (e) {
+      ret = false;
+    }
+    return function(){
+      return ret;
+    };
+  })();
+
+  // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+  // then change that media back to its intended value on load
+  rp.bindMediaToggle = function( link ){
+    // remember existing media attr for ultimate state, or default to 'all'
+    var finalMedia = link.media || "all";
+
+    function enableStylesheet(){
+      link.media = finalMedia;
+    }
+
+    // bind load handlers to enable media
+    if( link.addEventListener ){
+      link.addEventListener( "load", enableStylesheet );
+    } else if( link.attachEvent ){
+      link.attachEvent( "onload", enableStylesheet );
+    }
+
+    // Set rel and non-applicable media type to start an async request
+    // note: timeout allows this to happen async to let rendering continue in IE
+    setTimeout(function(){
+      link.rel = "stylesheet";
+      link.media = "only x";
+    });
+    // also enable media after 3 seconds,
+    // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+    setTimeout( enableStylesheet, 3000 );
+  };
+
+  // loop through link elements in DOM
+  rp.poly = function(){
+    // double check this to prevent external calls from running
+    if( rp.support() ){
+      return;
+    }
+    var links = w.document.getElementsByTagName( "link" );
+    for( var i = 0; i < links.length; i++ ){
+      var link = links[ i ];
+      // qualify links to those with rel=preload and as=style attrs
+      if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+        // prevent rerunning on link
+        link.setAttribute( "data-loadcss", true );
+        // bind listeners to toggle media back
+        rp.bindMediaToggle( link );
+      }
+    }
+  };
+
+  // if unsupported, run the polyfill
+  if( !rp.support() ){
+    // run once at least
+    rp.poly();
+
+    // rerun poly on an interval until onload
+    var run = w.setInterval( rp.poly, 500 );
+    if( w.addEventListener ){
+      w.addEventListener( "load", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    } else if( w.attachEvent ){
+      w.attachEvent( "onload", function(){
+        rp.poly();
+        w.clearInterval( run );
+      } );
+    }
+  }
+
+
+  // commonjs
+  if( typeof exports !== "undefined" ){
+    exports.loadCSS = loadCSS;
+  }
+  else {
+    w.loadCSS = loadCSS;
+  }
+}( typeof global !== "undefined" ? global : this ) );</script><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" defer></script><script src="/js/main.js?v=2018.7.9" defer></script><!-- fancybox--><link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script><!-- busuanzi--><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script></head><body><section class="profile-close" id="cxo-profile"><div class="profile-avatar"><i class="fa fa-caret-left"></i><img src="/blogs/img/assets/dog.png"></div><!--.profile-saying
+  i.fa.fa-comment
+  .saying--><div class="cxo-profile-inner"><div class="profile-name">YangWenyi</div><div class="profile-signature">for me</div><div class="friends"><div>FRIENDS</div><span><a href="//github.com/Longlongyu" target="_black">friendA</a></span><span><a href="//github.com/" target="_black">friendB</a></span><span><a href="//github.com/" target="_black">friendC</a></span></div><div class="read-progress"></div></div></section><header id="cxo-intro" style="height: 70vh;background-image: url(/img/intro/index-bg.png);"><nav id="cxo-intro-nav"><section><div class="intro-nav-title"><a href="/">Mr.Yang's Blog</a></div><div class="intro-nav-label-box"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div><i class="fa fa-bars intro-nav-menu"><div class="intro-nav-drop"><a href="/">Home</a><a href="/about/">About</a><a href="/archives/">Archives</a><a href="/tags/">Tags</a></div></i><div class="clear"></div></section></nav><h1>Mr.Yang's Blog</h1><h5>Welcome to my Blog!</h5><div class="intro-social"><a class="fa fa-envelope" href="mailto:568972484@qq.com" title="email"></a><a class="fa fa-github" href="https://github.com/a568972484" target="_blank" title="github"></a><a class="fa fa-weibo" href="//www.weibo.com" target="_blank" title="weibo"></a><a class="fa fa-facebook" href="//www.facebook.com" target="_blank" title="facebook"></a><a class="fa fa-twitter" href="//twitter.com" target="_blank" title="twitter"></a><a class="fa fa-rss" href="https://gitee.com/pythonywy" target="_blank" title="rss"></a></div></header><article class="cxo-up" id="cxo-content-outer"><section id="cxo-content-inner"><section id="recent-posts"><div class="recent-post-item"><div class="post-title"><a href="/blogs/2019/08/16/django-分页/">django-分页</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-08-16T01:11:00.000Z">2019-08-16</time></div><div class="recent-post-content">08.16自我总结django-分页一.django自带的分页12### 1.导入模块```from django.core.paginator import Paginator
+2.读取信息​ 1234### 3.生成painantor对象#### 生成painantor对象```python paginator = Paginator(userlist, 10) #对象,每页多少条数据
+painantor的属性与方法
+属性
+
+object_list：返回所有页对象的的列表
+per_page: 每页显示条目数量
+count:数据总个数
+num_pages:总页数
+page_range:总页数 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="django"> django</a></div><div class="read-more"><a class="more" href="/blogs/2019/08/16/django-分页/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/blogs/2019/08/13/django中CBV/">django中CBV</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-08-13T11:35:00.000Z">2019-08-13</time></div><div class="recent-post-content">08.13自我总结django中CBV一.django处理业务逻辑的两种方式
+FBV (function based views):使用函数来处理业务逻辑
+CBV （class based views）:使用类来处理业务逻辑
+
+## 二.CBV
+urls.py
+1url(r'^login/', views.Login.as_view()), #类名.as_view()
+
+views.py:
+1234567from django.views import Viewclass Login(View):    def get(self, request):    #方法里必须有request来接受传 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="django"> django</a></div><div class="read-more"><a class="more" href="/blogs/2019/08/13/django中CBV/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/blogs/2019/08/13/django中app分组/">django中app分组</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-08-13T11:08:00.000Z">2019-08-13</time></div><div class="recent-post-content">08.13自我总结django中app分组一.django路由系统app进行分组1.创建app
+使用pycharm创建django的时候， 加上app的名字,后续多个app只需复制粘贴之前app整个文件即可
+命令行Python manage.py startapp app的名字&lt;/ul&gt;
+2.app内文件简介
+12345678910111213141516&lt;li&gt;```admin.py```:django admin的时候会用&lt;/li&gt;&lt;li&gt;```apps.py```:注册文件&lt;/li&gt;&lt;li&gt;```models.py` ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="django"> django</a></div><div class="read-more"><a class="more" href="/blogs/2019/08/13/django中app分组/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/blogs/2019/08/13/django+pymysql搭建一个管理系统(一)/">django+pymysql搭建一个管理系统(一)</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-08-13T06:18:00.000Z">2019-08-13</time></div><div class="recent-post-content">django+pymysql搭建一个管理系统(一)1234567891011121314151617181920212223242526272829303132333435## 一.程序架构&lt;img src=&quot;https://www.cnblogs.com/images/cnblogs_com/pythonywy/1452728/o_%e5%be%ae%e4%bf%a1%e6%88%aa%e5%9b%be_20190813140103.png&quot; /&gt;## 二.mysql表单创建```zouye```库:存信息相关的```mysql#班级表create table ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="django"> django</a></div><div class="read-more"><a class="more" href="/blogs/2019/08/13/django+pymysql搭建一个管理系统(一)/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/blogs/2019/07/16/数据库,单表查询,多表查询,子查询/">数据库,单表查询,多表查询,子查询</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-07-16T11:05:00.000Z">2019-07-16</time></div><div class="recent-post-content">07.16自我总结数据库查找方式进阶一.单表查询1.查看表单选择段落1.disinct
+所有内容去重:select disinct * from 表名称;
+指定字段去重:select disinct 字段 from 表名称;&lt;/ul&gt;
+注意点
+disinct 必须写在开头&lt;/ul&gt;
+2.查看多个字段内容
+查看多个字段内容:select 字段一,字段2 from 表名称;
+查看全部以及字段内容:select * 字段1 from 表名称;&lt;/ul&gt;注意点
+
+有*和字段的时候,*必须写在字段的前面&lt;/ul&gt;
+3.对于查看段落横坐标进行重命名显示
+se ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="python"> python</a></div><div class="read-more"><a class="more" href="/blogs/2019/07/16/数据库,单表查询,多表查询,子查询/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/blogs/2019/07/13/数据库的基础概念/">数据库的基础概念</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-07-13T09:04:00.000Z">2019-07-13</time></div><div class="recent-post-content">07.13自我总结数据库的相关概念一.什么是数据库​ 存储数据的仓库​ 1.列表 字典….等等 都是内存中的 缺点:断电丢失 优点:速度快​ 2.文件存储 缺点:速度慢 优点:可以实现永久保存​ 本质就是一套基于CS结构的 客户端和服务器程序,最终的数据存储在服务器端的磁盘中
+二.为什么有数据库直接使用文件存储带来的问题1.速度慢2.我们的程序将来 可能后分布在不同的机器上​ 单台机器 性能肯定有上限,如果一台机器不能够满足,你可以用多个机器共同完成任务​ 分布式 每个服务器提供不同的服务,有时候某个业务流程可能会涉及到多个服务器​ 优点: 耦合度降低 易维护,缺点:通讯繁琐,容灾性没有集群好 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="python"> python</a></div><div class="read-more"><a class="more" href="/blogs/2019/07/13/数据库的基础概念/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/blogs/2019/07/07/Event事件/">Event事件</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-07-07T09:10:00.000Z">2019-07-07</time></div><div class="recent-post-content">07.07自我总结Event事件一.导入模块threading import Event```123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051## 二.概念线程间状态同步:即将一个任务丢到子进程中,这个任务将异步执行,如何获取到这个任务的**执行状态****注意:**执行状态和执行结果不是同一个概念,异步回调拿到的是任务的执行结果假设一个线程 负责启动服务器 启动服务器需要花一定的时间另一个线程作为客户端 要连接服务器 必须保证服务器已经启动要获取状态可以采 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="python"> python</a></div><div class="read-more"><a class="more" href="/blogs/2019/07/07/Event事件/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/blogs/2019/06/19/类与对象,类的继承,类的派生,类的组合,多态/">类与对象,类的继承,类的派生,类的组合,多态</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-06-19T10:50:00.000Z">2019-06-19</time></div><div class="recent-post-content">6.18-6.19自我总结面向对象编程1.类与对象在python中先有类再有对象,类和对象,你可以看成,类是把对象的相同特征和相同方法汇总再一起,再根据类来生成对象,这个对象具有类的特征与方法
+1.类的命名12345678class 类名:#这里类名必须用驼峰体进行命名有些特殊情况除外    name = a #特征    def __init__(self): self #对于生成的对象来说是生成的对象,对于类来说是个要传的形参,且__init__在运行类的时候他会调用函数        pass    def func():#func为方法.其在命名对象时候不会进行调用        pa ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="python"> python</a></div><div class="read-more"><a class="more" href="/blogs/2019/06/19/类与对象,类的继承,类的派生,类的组合,多态/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/blogs/2019/06/05/面向对象编程,鱼骨图分析法/">面向对象编程,鱼骨图分析法</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-06-05T07:23:00.000Z">2019-06-05</time></div><div class="recent-post-content">06.05 自我总结一.面向对象编程​ 面向过程编程，核心是编程二字，过程指的是解决问题的步骤，即先干什么、后干什么、再干什么、然后干什么……与工厂的工艺流程差不多,前后都有影响优点：复杂的问题流程化，进而简单化,调理清晰.缺点:拓展性不行
+二.对于我之前写的一个购物程序12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868 ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="python"> python</a></div><div class="read-more"><a class="more" href="/blogs/2019/06/05/面向对象编程,鱼骨图分析法/#more">ReadMore</a></div><hr></div><div class="recent-post-item"><div class="post-title"><a href="/blogs/2019/05/09/集合数据类型，拷贝，深拷贝，浅拷贝/">集合数据类型，拷贝，深拷贝，浅拷贝</a></div><div class="post-time"><i class="fa fa-table"></i><time datetime="2019-05-09T12:03:00.000Z">2019-05-09</time></div><div class="recent-post-content">5.9自我总结1.集合数据类型1.定义用{}中间值用，隔开，且集合中元素排列是无序的，而且如果有相同元素会只保留一个
+2.算法1.必须掌握1.长度len123set_1 = &#123;1,2,3,4,5&#125;print(len(set_1))#5
+2.成员运算in和not in123456#表示判断集合里面是否有某个值set_1 = &#123;1,2,3,4,5&#125;print(1 in set_1)#Trueprint(100 in set_1)#False
+3.并集(union或者|)12345678#两个集合的集合综合,union或者|set_1 = &#123;1,2, ...</div><div class="recent-post-tags"><a class="post-tag fa fa-tag" href="javascript:void(0)" date-tags="python"> python</a></div><div class="read-more"><a class="more" href="/blogs/2019/05/09/集合数据类型，拷贝，深拷贝，浅拷贝/#more">ReadMore</a></div><hr></div></section><nav class="cxo-page-nav"><span class="page-number current">1</span></nav></section></article><footer id="cxo-footer-outer"><div id="cxo-footer-inner"><p class="footer-container"><span>Site by </span><a href="http://hexo.io"><span>Hexo</span></a><span> | theme </span><a href="https://github.com/Longlongyu/hexo-theme-Cxo"><span>Cxo</span></a></p><i class="fa fa-user"> </i><span id="busuanzi_value_site_uv"></span><span> | </span><i class="fa fa-eye"> </i><span id="busuanzi_value_site_pv"></span><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?" + 'true';
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script></div></footer><!-- catelog--><!-- top--><i class="fa fa-arrow-up close" id="go-up" aria-hidden="true"></i></body></html>
